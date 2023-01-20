@@ -1,0 +1,18 @@
+    static boolean []arr;
+    
+    
+    public static void sieve(){
+
+        // n*lon(n)
+        for (int i = 2; i <=100100; i++) {
+        
+            if(arr[i] == false){
+            
+                for (int j = i*i; j <=100100; j+=i) {
+                
+                      arr[j] = true;
+                      
+                }
+            }
+        }
+    }
