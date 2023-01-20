@@ -1,0 +1,10 @@
+public static int slope(int a[],int []b){
+        
+        // useful for finding that number of different points lie on the same line or not
+        int x1 = a[0];
+        int y1 = a[1];
+        int x2 = b[0];
+        int y2 = b[1];
+        int ans = (y2 - y1)/( x1 == x2 ? 1: (x2 - x1));
+        return ans;
+    }
