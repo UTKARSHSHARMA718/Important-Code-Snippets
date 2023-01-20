@@ -1,0 +1,14 @@
+public static void generatePowerSet(int arr[],int n,HashSet<Integer> set,int start){
+
+        for (int i = 0; i < (1<<n); i++) {
+
+            int sum = 0;
+            for (int j = 0; j < n; j++) {
+
+                if( (i & (1<<j)) > 0){
+                    sum += arr[start+j];
+                }
+            }
+            set.add(sum);
+        }
+    }
