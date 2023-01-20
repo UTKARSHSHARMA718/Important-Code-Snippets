@@ -1,0 +1,61 @@
+ static class SegmentTree{
+ 
+        long seg[];
+    
+        public SegmentTree(int n){
+            seg = new long[4*n];
+        }
+
+        public void build(int ind,int low,int high,int []arr){
+
+            if(low == high){
+                seg[ind] = arr[low];
+                return;
+            }
+
+            int mid = (low + high)/2;
+            build(ind*2 + 1,low,mid,arr);
+            build(ind*2 + 2,mid+1,high,arr);
+            seg[ind] = seg[ind*2 + 1] + seg[ind*2 + 2];
+        }
+        
+        
+        
+        
+        
+        
+        public long query(int ind,int low,int high,int left, int right){
+
+            if(left<=low && high<=right){
+                return seg[ind];
+            }
+            if(right < low || high< left){
+                return 0; // in-valid case
+            }
+
+            int mid = (low+high)/2;
+            long leftQ = query(ind*2+1,low,mid,left,right);
+            long rightQ = query(ind*2+2,mid+1,high,left,right);
+            return leftQ+rightQ;
+        }
+        
+        
+        
+        
+        public void pointUpdate(int ind,int low,int high,int UpdateIndex,int val){
+            //update query for increase the value at given index by val
+            if(low == high){
+                seg[ind] = val;
+            }
+            else{
+                int mid = (low + high)/2;
+                if(UpdateIndex>=low && UpdateIndex<=mid){
+                    pointUpdate(ind*2+1,low,mid,UpdateIndex,val);
+                }else{
+                    pointUpdate(ind*2+2,mid+1,high,UpdateIndex,val);
+                }
+
+                seg[ind] = seg[ind*2+1] + seg[ind*2+2];
+            }
+        }
+    }
