@@ -1,0 +1,19 @@
+
+
+public static HashSet<Integer> giveMeAllFactors(int n){
+
+        HashSet<Integer> set = new HashSet<>();
+        set.add(n);
+        set.add(1);
+        
+        for (int i = 2; i<=350; i++) {
+        
+            if(n % i == 0){
+                set.add(i);
+                int otherPart = n / i;
+                set.add(otherPart);
+            }
+        }
+
+        return set;
+    }
