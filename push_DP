@@ -1,0 +1,46 @@
+// example of push dp by galen colin
+
+public class Main {
+
+    public static void main(String[] args) {
+        FastReader fs = new FastReader();
+        int n = fs.nextInt();
+        int k = fs.nextInt();
+        int office = fs.nextInt();
+        int arr[]=new int[n];
+        int keys[]=new int[k];
+        for(int i=0;i<n;i++)arr[i] = fs.nextInt();
+        for(int i=0;i<k;i++)keys[i] = fs.nextInt();
+
+        //use some kind of greedy logic before applying dp
+        // min distance man will go for min distance keys
+        sort(arr);
+        sort(keys);
+        //trying iterative dp
+        long dp[][]=new long[n+1][k+1];
+        //initialization for finding max value
+        for(long it[]:dp)Arrays.fill(it,(long)1e17);
+        //base case
+        dp[0][0] = 0;
+
+        //push dp structure by galen colin
+        for (int people = 0; people <=n; people++) {
+        
+            for (int key = 0; key <k; key++) {
+            
+                //take it(consider the next person)
+                if(people<n){
+                     long cost = Math.abs(office - keys[key])+Math.abs(arr[people] - keys[key]);
+                    dp[people+1][key+1] = Math.min(dp[people+1][key+1],Math.max(dp[people][key] , cost));
+                }
+                
+                //not take it(do not consider the next person)
+                dp[people][key+1] = Math.min(dp[people][key],dp[people][key+1]);
+            }
+        }
+
+        System.out.println(dp[n][k]);
+    }
+
+}
+
