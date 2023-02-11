@@ -1,0 +1,9 @@
+
+// can be easily converted to 3 and 4 variables also.
+public static long hashing(long a,long b){
+        long x = 999999937; // largest 9 digit prime number
+        long mod = (long)1e9+7;
+        a = a;
+        b = (b * x) % mod;
+        return (a%mod+b%mod)%mod;
+}
