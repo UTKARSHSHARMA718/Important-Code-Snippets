@@ -1,0 +1,42 @@
+
+class SRD{
+
+    long sqrtArr[];
+    public SRD(int n){
+        sqrtArr = new long[n];
+        for (int i = 0; i < n; i++) {
+            sqrtArr[i] = 0;
+        }
+    }
+    public void creation(int arr[]){
+        // for sum
+        int len = sqrtArr.length;
+        for (int i = 0; i < arr.length; i++) {
+            int index = i / len;
+            sqrtArr[index] += arr[i];
+        }
+    }
+
+    public long queary(int []arr,int left,int right){
+        long tot = 0;
+        int index=0;
+        int len = sqrtArr.length;
+        for (int i = left; i <=right ; ) {
+            if((i%len) == 0 && i+len-1 <= right ){
+                tot += sqrtArr[i/len];
+                i += len;
+            }
+            else{
+                tot += arr[i];
+                i++;
+            }
+        }
+        return tot;
+    }
+
+    public void pointUpdate(int index,int val,int arr[]){
+        arr[index] += val;
+        int len = sqrtArr.length;
+        sqrtArr[index/len] += val;
+    }
+}
