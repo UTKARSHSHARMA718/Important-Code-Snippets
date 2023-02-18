@@ -1,0 +1,28 @@
+ //Time complexity O(log2 N) for update and query.
+ static class Fenwick{
+        long tree[];
+        public Fenwick(int n){
+            tree = new long[n+10];
+            for (int i = 1; i <=n; i++) {
+                tree[i] = 0;
+            }
+        }
+        public void update(int index,long val){
+            int n = tree.length;
+            index += 1;
+            while(index < n){
+                tree[index] += val;
+                index =index + (index & (-index));
+            }
+        }
+        public long query(int tillIndex){
+            int index = tillIndex+1;
+            long tot = 0;
+            while(index > 0){
+                tot += tree[index];//cumulative sum
+                index = index - (index & (-index));
+            }
+            return tot;
+        }
+
+    }
