@@ -1,4 +1,6 @@
  //Time complexity O(log2 N) for update and query.
+ // Only work for:
+ // point update and range queries.
  static class Fenwick{
         long tree[];
         public Fenwick(int n){
