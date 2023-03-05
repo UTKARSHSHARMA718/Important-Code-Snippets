@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Main {
 
-    static long MOD =(long)998244353;
+    static long MOD =(long)1e9+7;
 
     public static void main(String[] args) {
         FastReader fs = new FastReader();
