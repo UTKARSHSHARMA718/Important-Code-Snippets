@@ -1,0 +1,368 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+    static long MOD =(long)998244353;
+
+    public static void main(String[] args) {
+        FastReader fs = new FastReader();
+        int t = fs.nextInt();
+        while (t-- >0){
+            int n = fs.nextInt();
+            
+        }
+
+    }
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    static int N = 500500;
+    static long fact[] = new long[N];
+    static long ifact[] = new long[N];
+    public static void fact_calc(int n){
+        fact[0]=1;
+        for (int i = 1; i <= n; i++) {
+            fact[i] = (fact[i-1] * i)%MOD;
+        }
+    }
+    static long mminvprime(long a, long b) {return power(a, b - 2, (int)b);}
+    public static void inverse_fact_calc(int n){
+        for(int i=n;i>=0;i--){
+            ifact[i] = mminvprime(fact[i],MOD);
+        }
+    }
+
+
+    static boolean[] is_prime =new boolean[1000500];
+    public static List<Integer> seive(int n){
+
+        Arrays.fill(is_prime,true);
+        is_prime[0] = is_prime[1] = false;
+        for (int i = 2; i <= n; i++) {
+            if (is_prime[i] && (long)i * i <= n) {
+                for (int j = i * i; j <= n; j += i)
+                    is_prime[j] = false;
+            }
+        }
+        List<Integer> prime = new ArrayList<>();
+        for(int i=0;i< is_prime.length;i++){
+            if(is_prime[i])
+                prime.add(i);
+        }
+        return prime;
+    }
+    public static long giveMeMin(long ...arr){
+        long min = Long.MAX_VALUE;
+//        printArray(arr);
+        for (int i = 0; i < arr.length; i++) {
+            min=Math.min(arr[i],min);
+        }
+        return min;
+    }
+
+
+    static long inverse(long i){
+        //using fermat little theorem
+        if(i==1) return 1;
+        return (MOD - ((MOD/i)*inverse(MOD%i))%MOD+MOD)%MOD;
+    }
+    public static long powerABC(long a,int b,int c,int mod){
+        long ans = power(b,c,mod-1);// due to fermat little theorem
+        return power(a,ans,mod);
+    }
+    public static long power(long n,long pow,int mod){
+        long ans = 1;
+        while(pow>0){
+
+            if((pow&1)>0){
+                ans = (ans%mod * n%mod)%mod;
+                pow--;
+            }
+            pow /= 2;
+            n = (n%mod * n%mod)%mod;
+        }
+        ans %= mod;
+        return ans;
+    }
+
+    static long maxEvenLenSum(int arr[], int n)
+    {
+
+        if(n<2){
+            return 0;
+        }
+        long ans = 0;
+        long dp[] = new long[n];
+
+        dp[0] = 0; // sub-array of even length cannot be of length 1
+        dp[1] = arr[0] + arr[1];
+        for (int i = 2; i < n; i++) {
+//            dp[i] will represent the maximum sum of even length sub array ending at ith position
+            dp[i] = Math.max(arr[i]+arr[i-1], arr[i] + arr[i-1] + dp[i-2]);
+        }
+        ans = Arrays.stream(dp).max().getAsLong();
+        return ans;
+    }
+
+
+    public static void printMatric(int [][]arr){
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(Arrays.toString(arr[i]));
+        }
+    }
+    public static long hashing(long a,long b){
+        long x = 999999937;
+        long mod = (long)1e9+7;
+        a = a;
+        b = (b%mod * x%mod) % mod;
+        return (a%mod+b%mod)%mod;
+    }
+
+    public static int sumOfDigits(int n){
+        int tot=0;
+        while (n>0)
+        {
+            tot += n%10;
+            n = n/10;
+        }
+        return tot;
+    }
+    static int[] smallest2(int arr[])
+    {
+        int first, second, arr_size = arr.length;
+
+        if(arr[0]<arr[1]){
+            first = 0;
+            second = 1;
+        }else{
+            first = 1;
+            second = 0;
+        }
+
+        for (int i = 0; i < arr_size ; i ++)
+        {
+            /* If current element is smaller than first
+              then update both first and second */
+            if (arr[i] < arr[first])
+            {
+                second = first;
+                first = i;
+            }
+
+            /* If arr[i] is in between first and second
+               then update second  */
+            else if (arr[i] < arr[second] && arr[i] != arr[first])
+                second = i;
+        }
+
+        return new int[]{first,second};
+    }
+
+
+    public static long lcm(long a, long b){
+        long val = (a*b)/gcd(a,b);
+        return val;
+    }
+    public static int findLevel(int n){
+        long left = 0;
+        long right = 0;
+        int level = 0;
+
+        while(!(left <= n && n<= right)){
+            left = (1L<<level);
+            right = (1L<<(level+1))-1;
+            level++;
+        }
+        return level-1;
+    }
+    public static long gcd(long a,long b){
+        if(b == 0)return a;
+        return gcd(b,a%b);
+    }
+    public static void printArray(int []arr){
+        System.out.println(Arrays.toString(arr));
+    }
+    public static void print(int a){
+        System.out.println(a);
+    }
+    public static void print(long a){
+        System.out.println(a);
+    }
+    public static void print(String a){
+        System.out.println(a);
+    }
+    public static void print(char a){
+        System.out.println(a);
+    }
+    public static void revSort(int arr[]){
+        sort(arr);
+        reverse(arr);
+    }
+    public static void sort(int []arr){
+        ArrayList<Integer> ARR = new ArrayList<>();
+        for(int i:arr)ARR.add(i);
+        Collections.sort(ARR);
+        for(int i=0;i<arr.length;i++)arr[i] = ARR.get(i);
+
+    }
+    public static boolean isPrime(long n){
+
+        if(n == 1)return false;
+
+        for (long i = 2; i*i<=n; i++) {
+            if(n % i ==0){
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public static void reverse(int arr[]){
+        int i = 0;
+        int j = arr.length-1;
+        while(i<j){
+            int t = arr[i];
+            arr[i] = arr[j];
+            arr[j] = t;
+            i++;j--;
+        }
+    }
+    public static HashSet<Integer> giveMeAllFactors(int n){
+
+        //The number is 1344 for integers up to 10^9 and 103680 for integers up to 10^18.
+        HashSet<Integer> set = new HashSet<>();
+        set.add(n);
+        set.add(1);
+        for (int i = 2; i<=1350; i++) {
+            if(n % i == 0){
+                set.add(i);
+                int otherPart = n / i;
+                set.add(otherPart);
+            }
+        }
+
+        return set;
+    }
+
+    static HashMap<Integer,HashSet<Integer>> cache = new HashMap<>();
+    public static HashSet<Integer> giveMeAllPrimeFactors(int n){
+
+        //The number is 1344 for integers up to 10^9 and 103680 for integers up to 10^18.
+        int run = (int)Math.sqrt(n);
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 2; i<=run; i++) {
+            if(n % i == 0){
+                set.add(i);
+                while(n%i == 0){
+                    n = n / i;
+                }
+            }
+        }
+
+        if(n!=1){
+            set.add(n);
+        }
+
+        return set;
+    }
+
+
+    public static int lower(int val,int start,long []arr,int end,long tot){
+        int low = start;
+        int high = end;
+        int ans = -1;
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(arr[mid] - tot >=val){
+                high = mid - 1;
+                ans  = mid;
+            }else{
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    public static int upper(long val,int start,long []arr,int end,long tot){
+        int low = start;
+        int high = end;
+        int ans = -1;
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(arr[mid]-tot <=val){
+                low = mid + 1;
+                ans  = mid;
+            }else{
+                high = mid - 1;
+            }
+        }
+        return ans;
+    }
+    static class FastReader
+    {
+        BufferedReader br;
+        StringTokenizer st;
+        public FastReader()
+        {
+            br = new BufferedReader(new
+                    InputStreamReader(System.in));
+        }
+        String next()
+        {
+            while (st == null || !st.hasMoreElements())
+            {
+                try
+                {
+                    st = new StringTokenizer(br.readLine());
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+        int nextInt()
+        {
+            return Integer.parseInt(next());
+        }
+        long nextLong()
+        {
+            return Long.parseLong(next());
+        }
+        double nextDouble()
+        {
+            return Double.parseDouble(next());
+        }
+        String nextLine()
+        {
+            String str = "";
+            try
+            {
+                str = br.readLine();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            return str;
+        }
+    }
+
+}
+
+
+
+///////////////////////
+
+
+
+
