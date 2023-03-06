@@ -1,0 +1,17 @@
+                if(isPrime(n)){
+                    System.out.println(1);
+                }
+                else{
+                // logic ex:- for 42 21 is the largest that is 21*2 hence we just need to find the fisrt divisor and then max = n/first_divisor;
+                    int root = (int) Math.sqrt(n);
+                    int max = 1;
+                    for (int i = 2; i <=root; i++) {
+                        if(n%i == 0) {
+                            max=n/i;
+                            break;
+                        }
+                    }
+
+                    System.out.println(max);
+
+                }
