@@ -1,0 +1,45 @@
+        Differnce Array for making changes into the array
+        
+        long dif[]=new long[n+1];
+        for(int i=0;i<n;i++){
+            if(i == 0) dif[i] = arr[i];
+            else dif[i] = arr[i] - arr[i-1];
+        }
+ 
+        int length = n - m + 1;
+        for(int i=0;i<m;i++){
+            int start = i;
+            int end = i + length - 1;
+//            System.out.println("start "+start +" end "+end +" length "+length);
+            int val = brr[i];
+            dif[start] += val;
+            dif[end+1] -= val;
+        }
+ 
+        long tot=0;
+        for (int i = 0; i < n; i++) {
+            tot += dif[i];
+            System.out.print((tot%mod) +" ");
+        }
+        System.out.println();
+        
+        
+        
+        
+        ////////////////////////////////////////////////
+        for just checking the effect of some queries having ranges l to r
+        
+        
+        long dif[]=new long[n+1];// filed with zeroes
+        for (int i = 0; i < q; i++) {
+            int start = qu[i][0];
+            int end = qu[i][1];
+            dif[start] += 1;
+            dif[end+1] -= 1;
+        }
+ 
+        long tot=0;
+        for (int i = 0; i < n; i++) {
+            tot += dif[i];
+            dif[i] = tot;
+        }
