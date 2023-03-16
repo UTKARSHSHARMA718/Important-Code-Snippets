@@ -1,0 +1,44 @@
+    static long inv; // initialise this with 0 like:- inv = 0; before calling the function.
+ 
+    public static void count_inversions(int arr[]){
+        int n = arr.length;
+        mergeSort(arr,0,n-1);
+    }
+
+    public static void mergeSort(int arr[],int low,int high){
+        if(low<high){
+            int mid = (low+high)/2;
+            mergeSort(arr,low,mid);
+            mergeSort(arr,mid+1,high);
+            merge(arr,low,mid,high);
+        }
+    }
+
+    public static void merge(int arr[],int low,int mid,int high){
+
+        int temp[] = new int[high-low+1];
+        int i = low;
+        int j = mid+1;
+        int k = 0;
+        while(i<=mid && j<=high){
+            if(arr[i]<=arr[j]){
+                temp[k++] = arr[i++];
+            }
+            else{
+                // when ele on right is smaller than element on the left
+                inv = inv + (mid + 1 - i);
+                temp[k++] = arr[j++];
+            }
+        }
+
+        while(i<=mid){
+            temp[k++] = arr[i++];
+        }
+        while(j<=high){
+            temp[k++] = arr[j++];
+        }
+
+        for(int ind = low;ind<=high;ind++){
+            arr[ind] = temp[ind - low];
+        }
+    }
