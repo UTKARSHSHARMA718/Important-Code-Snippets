@@ -1,0 +1,75 @@
+static class Mo{
+
+        static HashMap<String,Integer> map;
+
+        static int tot;
+
+        public void add(String val,int ind){
+            map.put(val,map.getOrDefault(val,0)+1);
+        }
+
+        public void remove(String val,int ind){
+            map.put(val,map.getOrDefault(val,0)-1);
+        }
+
+        public int[] MoAlgorithm(int Queries[][],String sq[],String arr[]){
+
+            int block_size = 1 + (int)Math.sqrt(arr.length);
+            map  = new HashMap<>();
+
+            Arrays.sort(Queries, new Comparator<int[]>() {
+                @Override
+                public int compare(int[] o1, int[] o2) {
+
+                    int l1 = o1[0], l2 = o2[0];
+                    int r1 = o1[1], r2 = o2[1];
+
+                    if(l1/block_size != l2/block_size){
+                        return (l1/block_size) - (l2/block_size);
+                    }
+
+                    return (r1) - (r2);
+                }
+            });
+
+
+            int answer[] = new int[Queries.length];
+            int curr_left  = 0;
+            int curr_right = -1;
+
+            tot = 0;
+            for(int []q:Queries){
+
+                int left =  q[0];
+                int right = q[1];
+                int index = q[2];
+                String s = sq[index];
+
+                while(curr_left > left){
+                    curr_left--;
+                    add(arr[curr_left],curr_left);
+                }
+
+                while(curr_left < left){
+                    remove(arr[curr_left],curr_left);
+                    curr_left++;
+                }
+
+                while(curr_right > right){
+                    remove(arr[curr_right],curr_right);
+                    curr_right--;
+                }
+
+                while(curr_right < right){
+                    curr_right++;
+                    add(arr[curr_right],curr_right);
+                }
+
+
+                answer[index] = map.getOrDefault(s,0);
+            }
+
+            return answer;
+
+        }
+    }
