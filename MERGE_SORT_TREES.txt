@@ -1,0 +1,48 @@
+//MERGE SORT TREES
+
+static class MergeSortTree{
+        List<Long>[] tree;
+        public MergeSortTree(int n){
+            tree = new List[4*n];
+            for (int i = 0; i < tree.length; i++) {
+                tree[i] = new ArrayList<>();
+            }
+        }
+
+        public void build(int l,int r,int ind,int arr[]){
+            if(l == r){
+                tree[ind].add((long)arr[l]);
+                return;
+            }
+
+            int mid = l + (r-l)/2;
+            build(l,mid,ind*2+1,arr);
+            build(mid+1,r,ind*2+2,arr);
+            tree[ind] = Merge(tree[ind*2+1],tree[ind*2+2]);
+        }
+        public List<Long> Merge(List<Long> a,List<Long> b){
+            //using merge sort technique
+            int s1 = 0;
+            int s2 = 0;
+            List<Long> temp = new ArrayList<Long>();
+            while (s1 < a.size() && s2 < b.size()){
+                if(a.get(s1) <= b.get(s2)){
+                    temp.add(a.get(s1));
+                    s1++;
+                }else{
+                    temp.add(b.get(s2));
+                    s2++;
+                }
+            }
+
+            while(s1 < a.size()) {
+                temp.add(a.get(s1));
+                s1++;
+            }
+            while(s2 < b.size()) {
+                temp.add(b.get(s2));
+                s2++;
+            }
+
+            return temp;
+        }
