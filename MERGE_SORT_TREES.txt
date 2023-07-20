@@ -8,13 +8,13 @@ static class MergeSortTree{
                 tree[i] = new ArrayList<>();
             }
         }
-
+ 
         public void build(int l,int r,int ind,int arr[]){
             if(l == r){
                 tree[ind].add((long)arr[l]);
                 return;
             }
-
+ 
             int mid = l + (r-l)/2;
             build(l,mid,ind*2+1,arr);
             build(mid+1,r,ind*2+2,arr);
@@ -34,7 +34,7 @@ static class MergeSortTree{
                     s2++;
                 }
             }
-
+ 
             while(s1 < a.size()) {
                 temp.add(a.get(s1));
                 s1++;
@@ -43,6 +43,40 @@ static class MergeSortTree{
                 temp.add(b.get(s2));
                 s2++;
             }
-
+ 
             return temp;
         }
+ 
+        public long query(int start,int end,int l,int r,int ind,long val){
+            if(l <= start && end <= r){
+                long reqInd = bs(tree[ind],val);
+                return tree[ind].size() - (reqInd+1);
+            }
+            if(r < start || l > end){
+                return 0;
+            }
+ 
+            int mid = start + (end-start)/2;
+            long left = query(start,mid,l,r,ind*2+1,val);
+            long right = query(mid+1,end,l,r,ind*2+2,val);
+            return left + right;
+        }
+ 
+        public int bs(List<Long> arr,long val){
+            int l = 0;
+            int h = arr.size()-1;
+            int ans = -1;
+            while(l<=h){
+                int mid = (l + h) /2;
+                if(arr.get(mid) <= val){
+                    ans = mid;
+                    l=mid+1;
+                }else{
+                    h=mid-1;
+                }
+            }
+            return ans;
+        }
+ 
+    }
+ 
